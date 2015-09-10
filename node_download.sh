@@ -196,8 +196,8 @@ gyp() {
 }
 
 nvm() {
-  if [ -z "nvmw_dir" ]; then
-    echo "not installed into NVMW for missing \$NVMW"
+  if [ -z "$nvmw_dir" ]; then
+    echo "do nothing for NVMW due to missing \$NVMW"
     return
   fi
 
@@ -242,6 +242,11 @@ remove() {
     rm -r "$gyp_dir"
   else
     echo "$gyp_dir not found"
+  fi
+
+  if [ -z "$nvmw_dir" ]; then
+    echo "do nothing for NVMW due to missing \$NVMW"
+    return
   fi
 
   if [ -d "$nvmw_dir" ]; then
