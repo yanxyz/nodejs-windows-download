@@ -152,12 +152,12 @@ fetch() {
     echo "$file already exists"
   else
     echo "fetching $file..."
-    status=$(curl -s --head -w %{http_code} "$url" -o /dev/null)
-    if [ $status != 200 ]; then
+    status=$(curl -Ls --head -w %{http_code} "$url" -o /dev/null)
+    if [ "$status" != 200 ]; then
       echo "$status $url"
       exit
     fi
-    curl -so "$file" "$url"
+    curl -Lso "$file" "$url"
   fi
 }
 
@@ -183,13 +183,13 @@ gyp() {
   mkdir "ia32"
   mkdir "x64"
   if [ $name = 'iojs' ]; then
-    curl -so "ia32/iojs.lib" $url_lib_x86
+    curl -Lso "ia32/iojs.lib" $url_lib_x86
     cp "ia32/iojs.lib" "ia32/node.lib"
-    curl -so "x64/iojs.lib" $url_lib_x64
+    curl -Lso "x64/iojs.lib" $url_lib_x64
     cp "x64/iojs.lib" "x64/node.lib"
   else
-    curl -so "ia32/node.lib" $url_lib_x86
-    curl -so "x64/node.lib" $url_lib_x64
+    curl -Lso "ia32/node.lib" $url_lib_x86
+    curl -Lso "x64/node.lib" $url_lib_x64
   fi
 
   echo '9' > installVersion
