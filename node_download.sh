@@ -152,11 +152,11 @@ fetch() {
     echo "$file already exists"
   else
     echo "fetching $file..."
-    status=$(curl -Ls --head -w %{http_code} "$url" -o /dev/null)
-    if [ "$status" != 200 ]; then
-      echo "$status $url"
-      exit
-    fi
+    # status=$(curl -Ls --head -w %{http_code} "$url" -o /dev/null)
+    # if [ "$status" != 200 ]; then
+    #   echo "$status $url"
+    #   exit
+    # fi
     curl -Lso "$file" "$url"
   fi
 }
