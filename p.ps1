@@ -7,7 +7,7 @@ param(
 )
 
 $dest = ".\downloads"
-$url = "https://npm.taobao.org/mirrors/node"
+$url = "http://npm.taobao.org/mirrors/node"
 $arch = if ([environment]::Is64BitOperatingSystem) { "x64" } else { "x86" }
 $repo = "https://github.com/yanxyz/nodejs-windows-download/#readme"
 
@@ -31,6 +31,8 @@ function Fetch($ver, $name) {
     }
     $src = "$url/v$ver/$name"
     Write-Debug "$src"
+    # Invoke-WebRequest fails to follow HTTP redirects from HTTPS
+    # https://github.com/PowerShell/PowerShell/issues/2896
     Invoke-WebRequest -Uri $src -OutFile $fileName
 }
 
